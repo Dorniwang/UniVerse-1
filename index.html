@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+
+<html>
+
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>UniVerse-1</title>
+
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="./files/bootstrap.min.css">
+    <link rel="stylesheet" href="./files/font-awesome.min.css">
+    <link rel="stylesheet" href="./files/codemirror.min.css">
+    <link rel="stylesheet" href="./files/app.css">
+
+
+
+
+</head>
+
+<body>
+    <div class="container" id="main">
+        <div class="row">
+            <h1 class="col-md-20 text-center">
+                <br></br>
+                <b>UniVerse-1</b>:A Unified Audio-Video Generation Framework via Stitching of Expertise<br>
+            </h1>
+            <hr style="margin-top:0px">
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <ul class="list-inline">
+                    <li>
+                        <a href="https://Dorniwang.github.io/" style="font-size: 16px;">
+                            Duomin Wang
+                        </a>
+                        <sup>1</sup>
+                    </li>
+                    <li>
+                        <a href="" style="font-size: 16px;">
+                            Wei Zuo
+                        </a>
+                        <sup>1</sup>
+                    </li>
+                    <li>
+                        <a href="" style="font-size: 16px;">
+                            Aojie Li
+                        </a>
+                        <sup>1</sup>
+                    </li>
+                    <li>
+                        <a href="https://lhchen.top/" style="font-size: 16px;">
+                            Ling-Hao Chen
+                        </a>
+                        <sup>1,4</sup>
+                    </li>
+                    <li>
+                        <a href="https://github.com/leoisufa" style="font-size: 16px;">
+                            Xinyao Liao
+                        </a>
+                        <sup>1</sup>
+                    </li>
+                    <li>
+                        <a href="https://deyuzhou-ust.github.io/" style="font-size: 16px;">
+                            Deyu Zhou
+                        </a>
+                        <sup>1,2</sup>
+                    </li>
+                    <li>
+                        <a href="https://zxyin.github.io/" style="font-size: 16px;">
+                            Zixin Yin
+                        </a>
+                        <sup>1,3</sup>
+                    </li>
+                    <li>
+                        <a href="https://delay-xili.github.io/" style="font-size: 16px;">
+                            Xili Dai
+                        </a>
+                        <sup>2</sup>
+                    </li>
+                    <li>
+                        <a href="https://www.skicyyu.org/" style="font-size: 16px;">
+                            Gang Yu
+                        </a>
+                        <sup>1</sup>
+                    </li><br>
+                    <a></a><br>
+                    
+                    <p style="font-size: 16px;">
+                        <li>
+                            <sup>1</sup>
+                            <a href="https://www.stepfun.com/" style="font-size: 16px;">
+                                StepFun
+                            </a>
+                        </li>
+                        <li>
+                            <sup>2</sup>
+                            <a href="https://www.hkust-gz.edu.cn/" style="font-size: 16px;">
+                                The Hong Kong University of Science and Technology(GuangZhou)
+                            </a>
+                        </li>
+                    </p>
+                    <p style="font-size: 16px;">
+                        <li>
+                            <sup>3</sup>
+                            <a href="https://hkust.edu.hk/" style="font-size: 16px;">
+                                The Hong Kong University of Science and Technology
+                            </a>
+                        </li>
+                        <li>
+                            <sup>4</sup>
+                            <a href="https://www.tsinghua.edu.cn/en/" style="font-size: 16px;">
+                                Tsinghua University
+                            </a>
+                        </li>
+                    </p>
+                    
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 text-center">
+                <ul class="nav nav-pills nav-justified">
+                    <li>
+                        <a href="">
+                        <!-- <a> -->
+                            <img src="./files/paper.png" height="60px">
+                            <h4><strong>Paper</strong></h4>
+                        </a>
+                    </li>
+
+                    <li>
+                        <!-- <a onClick="alert('Code coming soon!\nContact wangduomin@gmail.com for more details.')"> -->
+                        <a href="https://github.com/Dorniwang/UniVerse-1">
+                        <!-- <a> -->
+                            <img src="./files/github.png" height="60px">
+                            <h4><strong>Code</strong></h4>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <a>
+                    <img src="./files/architecture.png" class="img-responsive" alt="archi" style="padding-left:10%;padding-right:10%;"><br>
+                </a>
+                <p class="text-justify" style="font-size: 16px;">
+                    Architecture of UniVerse-1. (a) Overall architecture. The architectural foundation of UniVerse-1 is realized through a stitching of expertise methodology. This approach deeply integrates the pre-trained Wan2.1 video model and the Ace-step audio model. (b) Fused block. The fusion is implemented at a granular, block-by-block level, where each block in the Wan architecture is deeply fused with its corresponding block in the Ace-step architecture.
+                </p>
+                <br></br>
+                <h2>
+                    Abstract
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    We introduce UniVerse-1, a unified, Veo-3-like model capable of simultaneously generating coordinated audio and video. To enhance training efficiency, we bypass training from scratch and instead employ a stitching of expertise technique. This approach deeply fuses the corresponding blocks of pre-trained video and music generation expertise models, thereby fully leveraging their foundational capabilities. To ensure accurate annotations and temporal alignment for both ambient sounds and speech with video content, we developed an online annotation pipeline that processes the required training data and generates labels during training process. This strategy circumvents the performance degradation often caused by misalignment text-based annotations. Through the synergy of these techniques, our model, after being finetuned on approximately 7,600 hours of audio-video data, produces results with well-coordinated audio-visuals for ambient sounds generation and strong alignment for speech generation. To systematically evaluate our proposed method, we introduce Uni-Bench, a new benchmark dataset. In an effort to advance research in audio-video generation and to close the performance gap with state-of-the-art models such as Veo3, we make our model and code publicly available. We hope this contribution will benefit the broader research community. 
+                </p>
+            </div>
+        </div>
+
+        <!-- <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <h2>
+                    Video
+                </h2>
+                <hr style="margin-top:0px">
+                <div class="text-center">
+                    <div style="position:relative;padding-top:56.25%;">
+                        <iframe src="https://www.youtube.com/embed/RCb49MlwQ-Y" allowfullscreen=""
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <h2>
+                    Stitching of Expertise
+                </h2>
+                <hr style="margin-top:0px">
+                <img src="./files/universe_soe.png" class="img-responsive" alt="planner" style="padding-left:10%;padding-right:10%;">
+                <p class="text-center" style="font-size: 16px;">
+                    We introduce a novel framework, termed 'Stitching of Expertise', for integrating specialized, pre-existing models for video and audio synthesis. This approach is designed to preserve the generative capabilities of each unimodal expert, while simultaneously enabling fine-grained, bidirectional interaction between them at the level of individual layer blocks.
+                </p>
+                <br></br>
+                <img src="./files/universe_layerinterpolation.png" class="img-responsive" alt="driving" style="padding-left:10%;padding-right:10%;">
+                <p class="text-center" style="font-size: 16px;">
+                    To address the architectural disparity arising from the different depths of the two models, we employ a layer interpolation technique. This method aligns the models by systematically inserting new transformer blocks into the shallower network at uniform intervals. Critically, we initialize the parameters of each new block by linearly interpolating the weights of its immediately preceding and succeeding layers, which is essential for a smooth integration.  
+                </p>
+                <br></br>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <h2>
+                    Generated results
+                </h2>
+                <hr style="margin-top:0px">
+                
+                <section class="hero is-medium" style="background-color: #ebecec; padding: 1rem 1rem;">
+                    <h3>
+                        Human Speech
+                    </h3>
+                    <br></br>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/1.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case1
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/2.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case2
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/3.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case3
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/4.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case4
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/5.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case5
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/6.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case6
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/7.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case7
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/8.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case8
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/9.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case9
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/10.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case10
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/11.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case11
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/12.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case12
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/13.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case13
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/14.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case14
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/speech/15.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case15
+                            </figcaption>
+                        </div>
+                    </div>
+                </section>
+                <br></br>
+                <section class="hero is-medium" style="background-color: #ebecec; padding: 1rem 1rem;">
+                    <h3>
+                        Musical Instrument Playing
+                    </h3>
+                    <br></br>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/1.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case1
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/2.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case2
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/3.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case3
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/4.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case4
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/5.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case5
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/6.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case6
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/7.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case7
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/8.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case8
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/9.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case9
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/instrument/10.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case10
+                            </figcaption>
+                        </div>
+                    </div>
+                </section>
+                <br></br>
+                <section class="hero is-medium" style="background-color: #ebecec; padding: 1rem 1rem;">
+                    <h3>
+                        Other Sound
+                    </h3>
+                    <br></br>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/1.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case1
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/2.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case2
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/3.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case3
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/4.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case4
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/5.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case5
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/6.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case6
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/7.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case7
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/8.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case8
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/9.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case9
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
+                                <source src="./files/generated/other/10.mp4" type="video/mp4">
+                            </video>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case10
+                            </figcaption>
+                        </div>
+                    </div>
+                </section>
+                <br></br>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <h2>
+                    Uni-Bench
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-center" style="font-size: 16px;">
+                    To systematically evaluate our proposed method, we introduce Uni-Bench, a new benchmark dataset. Uni-Bench comprises 600 image-text prompt pairs designed to cover a diverse range of sound categories. Highlighting its versatility, the benchmark supports the evaluation of not only joint audio-video generation but also unidirectional tasks. It can be used to assess video-to-audio generation, and it includes the specialized Uni-Ted subset for evaluating audio-to-video tasks like talking head synthesis.
+                </p>
+            </div>
+            <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                <video style="width:100%;height:50%;padding-left:5%;padding-right:5%;" controls style="margin: 5px;" >
+                    <source src="./files/puzzle_preview.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0">
+                <div class="text-center">
+                    <h2>
+                        Citation
+                    </h2>
+                </div>
+                <hr style="margin-top:0px">
+                <div class="form-group col-md-12 col-md-offset-0">
+                    <div class="CodeMirror cm-s-default CodeMirror-wrap" style="font-size: 16px;">
+                        <div
+                            style="overflow: hidden; position: relative; width: 3px; height: 0px; top: 4px; left: 4px; ">
+                            <textarea autocorrect="off" autocapitalize="off" spellcheck="false"
+                                style="position: absolute; padding: 0px; width: 1000px; height: 1em; outline: none;"
+                                tabindex="0"></textarea></div>
+                        <div class="CodeMirror-vscrollbar" cm-not-content="true">
+                            <div style="min-width: 1px; height: 0px;"></div>
+                        </div>
+                        <div class="CodeMirror-hscrollbar" cm-not-content="true">
+                            <div style="height: 100%; min-height: 1px; width: 0px;"></div>
+                        </div>
+                        <div class="CodeMirror-scrollbar-filler" cm-not-content="true"></div>
+                        <div class="CodeMirror-gutter-filler" cm-not-content="true"></div>
+                        <div class="CodeMirror-scroll" tabindex="-1">
+                            <div class="CodeMirror-sizer"
+                                style="margin-left: 0px; margin-bottom: -17px; border-right-width: 13px; min-height: 162px; padding-right: 0px; padding-bottom: 0px;">
+                                <div style="position: relative; top: 0px;">
+                                    <div class="CodeMirror-lines">
+                                        <div style="position: relative; outline: none;">
+                                            <div class="CodeMirror-measure">AخA</div>
+                                            <div class="CodeMirror-measure"></div>
+                                            <div style="position: relative; z-index: 1;"></div>
+                                            <div class="CodeMirror-cursors">
+                                                <div class="CodeMirror-cursor"
+                                                    style="left: 4px; top: 0px; height: 17.1406px;">&nbsp;</div>
+                                            </div>
+                                            <div class="CodeMirror-code" style="">
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">@inproceedings{wang2025universe-1,</span></pre>
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;  title={UniVerse-1:A Unified Audio-Video Generation Framework via Stitching of Expertise},</span></pre>
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;  author={Wang, Duomin and Zuo, wei and Li, Aojie and Chen, Ling-Hao and Liao, Xinyao and Zhou, Deyu and Yin, Zixin and Dai, Xili and Yu, Gang},</span></pre>
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;  journal={arxiv},</span></pre>
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;"> &nbsp;  year={2025}</span></pre>
+                                                <pre
+                                                    class=" CodeMirror-line "><span style="padding-right: 0.1px;">}</span></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="position: absolute; height: 13px; width: 1px; top: 280px;"></div>
+                            <div class="CodeMirror-gutters" style="display: none; height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <h2>
+                    Acknowledgements
+                </h2>
+                <hr style="margin-top:0px">
+                <p class="text-justify" style="font-size: 16px;">
+                    <!-- We thank Harry Shum for the fruitful advice and discussion to improve the paper. <br> -->
+                    The website template was adapted from <a href="https://yudeng.github.io/GRAM/">GRAM</a>.
+                </p>
+            </div>
+        </div>
+
+
+</body>
+
+</html>
