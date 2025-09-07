@@ -18,7 +18,63 @@
     <link rel="stylesheet" href="./files/app.css">
 
 
+    <style>
+        /* 1. 父容器：作为定位的基准 */ 
+        .video-container {
+            position: relative; /* 关键：让内部的绝对定位元素相对于此容器 */
+            width: 80%; /* 容器宽度 */
+            height: 80%; /* 容器宽度 */
+            margin: 5px; /* 让容器在页面上居中，方便演示 */
+            display: inline-block; /* 让容器宽度自适应内容，如果需要的话 */
+        }
 
+        /* 2. 视频样式 */
+        .video-container video {
+            display: block; /* 消除视频下方的微小间隙 */
+            width: 100%;    /* 让视频宽度充满父容器 */
+            height: auto;   /* 高度自适应 */
+        }
+
+        /* 3. 文本介绍框（遮罩层）的样式 */
+        .video-overlay {
+            position: absolute;
+            /* 1. 定位在父容器的底部，并向上推一个自身的高度 */
+            bottom: 100%; 
+            left: 0;
+            width: 100%; /* 宽度与视频一致 */
+            
+            background-color: #333; /* 使用不透明背景，避免文字与页面背景重叠 */
+            color: white;
+            padding: 15px;
+            box-sizing: border-box; /* 让 padding 不会撑大宽度 */
+            
+            /* 2. 默认状态：不可见且稍微向下偏移 */
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            
+            /* 防止鼠标事件干扰 */
+            pointer-events: none;
+        }
+
+        /* 4. 关键：当鼠标悬浮在父容器上时，显示文本介绍框 */
+        .video-container:hover .video-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* (可选) 视频下方的标题样式 */
+        .caption {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 16px;
+            font-family: sans-serif;
+        }
+        .highlight-blue {
+            color: #5dade2; /* A nice shade of blue */
+            font-weight: bold;
+        }
+    </style>
 
 </head>
 
@@ -155,7 +211,7 @@
                     <li></li>
                     <li>
                         <!-- <a onClick="alert('Code coming soon!\nContact wangduomin@gmail.com for more details.')"> -->
-                        <a href="https://huggingface.co/datasets/dorni/Uni-Bench/">
+                        <a href="https://huggingface.co/datasets/dorni/Verse-Bench/">
                         <!-- <a> -->
                             <img src="./files/huggingface.svg" height="25px">
                             <h4><strong>Benchmark</strong></h4>
@@ -179,7 +235,7 @@
                 </h2>
                 <hr style="margin-top:0px">
                 <p class="text-justify" style="font-size: 16px;">
-                    We introduce UniVerse-1, a unified, Veo-3-like model capable of simultaneously generating coordinated audio and video. To enhance training efficiency, we bypass training from scratch and instead employ a stitching of expertise technique. This approach deeply fuses the corresponding blocks of pre-trained video and music generation expertise models, thereby fully leveraging their foundational capabilities. To ensure accurate annotations and temporal alignment for both ambient sounds and speech with video content, we developed an online annotation pipeline that processes the required training data and generates labels during training process. This strategy circumvents the performance degradation often caused by misalignment text-based annotations. Through the synergy of these techniques, our model, after being finetuned on approximately 7,600 hours of audio-video data, produces results with well-coordinated audio-visuals for ambient sounds generation and strong alignment for speech generation. To systematically evaluate our proposed method, we introduce Uni-Bench, a new benchmark dataset. In an effort to advance research in audio-video generation and to close the performance gap with state-of-the-art models such as Veo3, we make our model and code publicly available. We hope this contribution will benefit the broader research community. 
+                    We introduce UniVerse-1, a unified, Veo-3-like model capable of simultaneously generating coordinated audio and video. To enhance training efficiency, we bypass training from scratch and instead employ a stitching of expertise technique. This approach deeply fuses the corresponding blocks of pre-trained video and music generation expertise models, thereby fully leveraging their foundational capabilities. To ensure accurate annotations and temporal alignment for both ambient sounds and speech with video content, we developed an online annotation pipeline that processes the required training data and generates labels during training process. This strategy circumvents the performance degradation often caused by misalignment text-based annotations. Through the synergy of these techniques, our model, after being finetuned on approximately 7,600 hours of audio-video data, produces results with well-coordinated audio-visuals for ambient sounds generation and strong alignment for speech generation. To systematically evaluate our proposed method, we introduce Verse-Bench, a new benchmark dataset. In an effort to advance research in audio-video generation and to close the performance gap with state-of-the-art models such as Veo3, we make our model and code publicly available. We hope this contribution will benefit the broader research community. 
                 </p>
             </div>
         </div>
@@ -235,41 +291,56 @@
                     <br></br>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/1.mp4" type="video/mp4">
+                            <video controls> 
+                                <source src="./files/generated/speech/case1.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a man with long black hair, wearing a traditional light gray robe, speaking angrily about having been searching for someone for ten years. The setting is a dimly lit room with blurred wooden elements, and the man's serious and determined expression is emphasized through his red eyes and slight frown. The video focuses on the man's speech and expression, with no additional ambient sounds provided.<br><span class="highlight-blue">Speech Content:</span> I really have been looking for you for ten years. I have been looking for you for ten years.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case1
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/2.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case2.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a woman in a leopard print coat speaking into a microphone with a green label that reads '金典 SATINE'. She is standing in front of a large screen displaying text, likely in a studio or event setting. The woman is addressing the camera or an audience, discussing her mother's comments about her age and her thoughts on Dilraba Dilmurat's marriage status. The scene is static with no significant movement or changes in the background.<br><span class="highlight-blue">Speech Content:</span> My mom always tells me that I am so old, if I don’t find a partner, how will I get married in the future? I told my mom how could Dilraba Dilmurat not get married.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case2
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/3.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case3.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a man speaking in front of a bookshelf filled with books and a panda poster. He is wearing glasses and a black t-shirt. The setting appears to be an indoor space, possibly a home office or study room. The man is likely delivering a speech or presentation, discussing an article by Professor Feng Yujun about Russia's defeat. There is no significant movement or action taking place in the video.<br><span class="highlight-blue">Speech Content:</span> Recently, Professor Feng Yujun, an expert on Russian issues at Peking University, published an article in the famous British magazine The Economist saying that Russia's defeat is inevitable.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case3
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/4.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case4.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a man in traditional Chinese attire standing in a field of tall grass. He is clasping his hands and speaking, with a calm and reflective expression. The background is a serene field with a warm, golden sky, creating a peaceful and contemplative atmosphere. There is no ambient sound provided.<br><span class="highlight-blue">Speech Content:</span> If a person has no dreams, what is the difference between him and a salted fish.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case4
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/5.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case5.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a close-up of a menacing-looking devil in a dense forest, speaking about the advancements in AI technology. The setting is eerie and atmospheric, with soft, diffused lighting and a sense of mystery.<br><span class="highlight-blue">Speech Content:</span> Breaking news. AI is getting so powerful that you could turn photos to videos and to.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case5
                             </figcaption>
@@ -277,41 +348,56 @@
                     </div>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/6.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case6.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue"><span class="highlight-blue">Video Prompt:</span></span> The video features a man with long black hair, wearing a traditional light gray robe, speaking angrily about having been searching for someone for ten years. The setting is a dimly lit room with blurred wooden elements, and the man's serious and determined expression is emphasized through his red eyes and slight frown. The video focuses on the man's speech and expression, with no additional ambient sounds provided.<br><span class="highlight-blue">Ambient Prompt:</span> A woman giving a speech.<br><span class="highlight-blue">Speech Content:</span> I really have been looking for you for ten years.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case6
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/7.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case7.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video depicts a formal graduation ceremony where a woman is delivering a speech about the world macroeconomic environment. The setting is simple, with a plain wall and a few other individuals in graduation attire standing in the background. The woman is standing at a podium, speaking into a microphone, while the other individuals observe attentively.<br><span class="highlight-blue">Speech Content:</span> Debates on the world macroeconomic environment that today so govern and impact.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case7
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/8.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case8.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a bald man in a beige blazer speaking on a stage. He is addressing an unseen audience, discussing the issue of people not listening when others speak. The setting is simple, with a blue background and a circular shadow, indicating a formal presentation or lecture environment.<br><span class="highlight-blue">Ambient Prompt:</span> A man is giving a speech.<br><span class="highlight-blue">Speech Content:</span> And yet many people have the experience that when they speak, people don't listen to them. Why is that?</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case8
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/9.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case9.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man in a dark suit and white shirt is seated on a yellow couch, speaking about the language of Americans. He uses hand gestures to emphasize his points, and the background shows a cityscape with illuminated buildings, suggesting an urban setting, possibly a studio with a city view.<br><span class="highlight-blue">Ambient Prompt:</span> A man speaking.<br><span class="highlight-blue">Speech Content:</span> The thing about Americans that I've thought about the language is that they speak, they say they speak English.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case9
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/10.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case10.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man in a tuxedo is giving a speech at a formal event, holding an award and speaking into a microphone. The background is a blurred, colorful backdrop with bokeh effects, suggesting a celebratory atmosphere. The man is the main focus of the video, and there are no other characters or objects in the scene.<br><span class="highlight-blue">Ambient Prompt:</span> A man giving a speech.<br><span class="highlight-blue">Speech Content:</span> The Revenant was a product of the tireless efforts of an unbelievable cast.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case10
                             </figcaption>
@@ -319,43 +405,115 @@
                     </div>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/11.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case11.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> An anime-style girl is sitting at a table in a restaurant, eating a bowl of noodles with chopsticks. She is wearing a green cardigan over a white dress with black lace trim. The girl has long black hair with star-shaped hairpins. She is talking about how spicy the noodles are. The background shows a clock on the wall and a man sitting at a table. The ambient sound is the sound of eating noodles.<br><span class="highlight-blue">Speech Content:</span> It's so spicy. It's so spicy.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case11
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/12.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case12.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video depicts a man in a professional setting, engaged in a serious phone conversation. He is dressed in a gray suit and white shirt, holding a telephone receiver and a pen, suggesting he is in the middle of a business discussion. The background is a simple office environment, with a blurred figure in the background, adding to the professional atmosphere. The man's facial expression and body language convey determination and focus, emphasizing the importance of the conversation he is having.<br><span class="highlight-blue">Speech Content:</span> This time we must get this order, no matter what the cost.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case12
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/13.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case13.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a woman in a living room, speaking about the desire for larger chests and acknowledging the challenges associated with it. She is dressed casually in a light blue shirt and is gesturing with her hands as she speaks. The background is a typical living room setting with a couch, plants, and a ceiling fan. The lighting is natural, indicating it is daytime.<br><span class="highlight-blue">Speech Content:</span> I know the many people have small chests that wish to have bigger chest. I know that could be so hard for some reasons.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case13
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/14.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case14.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a woman in a dramatic and emotional performance, singing or speaking into a vintage microphone. Her attire and makeup, along with her expressive gestures, suggest a powerful and heartfelt delivery. The dark background and the focus on her and the microphone create a sense of intimacy and intensity, highlighting the emotional depth of her performance.<br><span class="highlight-blue">Speech Content:</span> Whenever sing my song, on the stage, on my own. Whenever say my words, wishing they would be heard.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case14
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/speech/15.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/speech/case15.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features Lisa of Blackpink speaking into a microphone, wearing headphones and a blue top with a cat design. She is in a setting with a brick wall background. The video captures her speaking and occasionally touching her face.<br><span class="highlight-blue">Ambient Prompt:</span> A woman speaking.<br><span class="highlight-blue">Speech Content:</span> Like people know me as Lisa of Blackpink.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case15
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/speech/case16.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a man in elaborate armor standing confidently in a dramatic stadium setting. He speaks with a confident and assertive tone, emphasizing his power and authority. The background is filled with a cloudy sky and lightning, adding to the intense and dramatic atmosphere. The overall style is cartoonish, with detailed and expressive character design.<br><span class="highlight-blue">Ambient Prompt:</span> Noisy background sound<br><span class="highlight-blue">Speech Content:</span> You think you've seen pain? You think you know suffering? Try beat it.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case16
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/speech/case17.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a woman speaking about her music, which she describes as very westernized despite being a Chinese musician. She is standing in front of a blue curtain, with a traditional Chinese string instrument visible to her left. Her hands are moving as she speaks, indicating an expressive delivery.<br><span class="highlight-blue">Ambient Prompt:</span> A woman giving a speech.<br><span class="highlight-blue">Speech Content:</span> However, as a Chinese musician, my music was very westernized.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case17
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/speech/case18.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man in a gray suit and hat is giving a speech on a stage. He is gesturing with his hands while speaking about the data showing that married people report higher life satisfaction. The background is a stage with a presentation screen displaying text.<br><span class="highlight-blue">Ambient Prompt:</span> An adult male is speaking.<br><span class="highlight-blue">Speech Content:</span> The get married advocates like to point to data that show that married people report higher life satisfaction.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case18
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/speech/case19.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A cartoon bunny wearing a blue jacket and carrying a brown backpack is standing on a dirt path surrounded by colorful flowers. The bunny is looking around and possibly talking to the camera about picking carrots and sharing them with parents. The background is a picturesque outdoor setting with a dirt path, colorful flowers, and a blurred background of houses and trees, suggesting a rural or countryside environment.<br><span class="highlight-blue">Speech Content:</span> I picked a lot of carrots today and will share them with my parents when I get home.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case19
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/speech/case20.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a woman dressed in traditional attire, speaking directly to the camera with a serious demeanor. The setting is an outdoor environment with large green leaves in the background, and the woman's speech content suggests she is providing advice or information, possibly related to health and mental well-being.<br><span class="highlight-blue">Speech Content:</span> It's just a game, so don't take it to heart. Take it from me, I'm a doctor. Excessive rumination on negative thoughts is known to cause many adverse health effects.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case20
                             </figcaption>
                         </div>
                     </div>
@@ -368,41 +526,56 @@
                     <br></br>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/1.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case1.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young man is sitting on a step, playing a guitar and singing. He is wearing a gray t-shirt and dark pants with red sneakers. The background features a yellow wall with peeling paint and a window. The camera remains stationary, focusing on the young man and his guitar. The ambient sound is the sound of the guitar and singing.<br><span class="highlight-blue">Ambient Prompt:</span> Guitar music and singing.<br><span class="highlight-blue">Speech Content:</span> When I was young, I'd listen to the radio Waitin' for my favorite songs.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case1
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/2.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case2.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video shows a person playing the saxophone in a dimly lit room with a warm ambiance. The person is wearing a black t-shirt with a graphic design and glasses. They are playing a golden saxophone, moving their fingers on the keys, and occasionally adjusting their posture. The background includes framed posters on the wall, a computer monitor displaying a music editing software, a microphone, a speaker, and a lava lamp on a desk. The camera remains stationary, focusing on the person and the saxophone. The sound of the saxophone, the music playing in the background, and the ambient noise of the room can be heard.<br><span class="highlight-blue">Ambient Prompt:</span> A saxophone is playing a melody.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case2
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/3.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case3.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A woman is playing a flute in a dark, indoor setting. She is wearing a pink blazer and a patterned blouse. Her hands are moving rhythmically over the keys of the flute as she plays. The background is blurred, suggesting an indoor environment with soft lighting. The only sound is the soft, melodic music of the flute.<br><span class="highlight-blue">Ambient Prompt:</span> A flute is playing a note.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case3
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/4.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case4.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young man is playing an acoustic guitar in a room with blue walls, two large speakers, and string lights in the background. He is wearing glasses, a maroon shirt, and a white undershirt. The video focuses on his hands moving along the fretboard and strumming the strings, with background music and guitar strumming audible.<br><span class="highlight-blue">Ambient Prompt:</span> A guitar is being played.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case4
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/5.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case5.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young man is playing the piano in a well-lit room. He is wearing a green T-shirt and glasses, sitting on a black piano bench. The room has large windows covered by blinds, a bookshelf filled with books on the right side, and a carpeted floor. The young man is focused on playing the piano, his hands moving rhythmically over the keys, and he occasionally glances at the sheet music. The background music is soft and adds to the serene atmosphere of the room.<br><span class="highlight-blue">Ambient Prompt:</span> A piano is playing a melody.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case5
                             </figcaption>
@@ -410,43 +583,115 @@
                     </div>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/6.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case6.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young boy is playing the drums in a room decorated with posters of bands and musicians. He is wearing a yellow t-shirt with a geometric pattern and black shorts, and he is wearing headphones. The boy is actively playing the drums, hitting the drums and cymbals rhythmically. The room has dark gray walls, a carpeted floor, and posters of bands and musicians on the wall. The background music is playing throughout the video.<br><span class="highlight-blue">Ambient Prompt:</span> A drum beat is playing.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case6
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/7.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case7.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A pianist dressed in a black suit is playing a Kawai piano in a dimly lit room with a wooden floor. The pianist's hands move rhythmically across the keys, creating a soothing melody. The background is quiet, with only the soft sound of the piano music.<br><span class="highlight-blue">Ambient Prompt:</span> A piano is playing a melody.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case7
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/8.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case8.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man is playing the violin in a room filled with violins and books. He is wearing a black t-shirt with a red 'Supreme' logo. The man is focused on playing the violin, moving the bow across the strings and his fingers along the strings. The room has shelves containing various violins and books, and a framed sheet music on the wall. The sound of the violin being played can be heard.<br><span class="highlight-blue">Ambient Prompt:</span> A violin is playing a note.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case8
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/9.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case9.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man wearing a striped shirt is playing the violin with a bow. He is standing in front of a plain white background. The man is moving his hands and body while playing the violin. There is music playing in the background.<br><span class="highlight-blue">Ambient Prompt:</span> A violin is playing a note.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case9
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/instrument/10.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/instrument/case10.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video features a woman playing an acoustic guitar in a cozy, warmly lit room. She is dressed in a white blouse and a pearl necklace, and her long brown hair flows freely. The room is decorated with string lights, a red electric guitar, and a ukulele hanging on the wall. A floral-patterned cushion is visible on a chair in the background. The woman occasionally looks at the camera with a smile while playing the guitar, creating a melodic tune. The camera remains focused on her, capturing her expressions and movements. The ambient sound is the music of the guitar, adding to the cozy and intimate atmosphere of the scene.<br><span class="highlight-blue">Ambient Prompt:</span> The sound of the guitar music.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case10
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/instrument/case11.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young boy is sitting on a couch, playing an acoustic guitar and singing a song. The room is cozy with a beige couch, a window with blinds, and a wooden floor. The boy is wearing a dark blue t-shirt and patterned shorts with animal prints. He strums the guitar and sings, his facial expressions changing as he sings. The background music is a guitar and singing.<br><span class="highlight-blue">Ambient Prompt:</span> A young boy sings and plays a guitar.<br><span class="highlight-blue">Speech Content:</span> You make me happy when the clouds are gray.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case11
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/instrument/case12.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video shows a woman playing a flute in a decorative setting. She is wearing an orange sweatshirt and black pants, sitting on a chair, and her hands and mouth are actively engaged in playing the flute. The background features pink flowers and a lamp, creating a serene and artistic atmosphere. The camera remains stationary, capturing the woman's focused performance.<br><span class="highlight-blue">Ambient Prompt:</span> A flute is playing a melody.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case12
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/instrument/case13.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a serene and focused moment of a woman playing the violin. She is dressed in a strapless pink dress, and her dark hair is neatly tied in a bun. The background is a plain, light-colored wall, which keeps the focus on her and her instrument. The music playing in the background adds to the tranquil and artistic atmosphere of the scene.<br><span class="highlight-blue">Ambient Prompt:</span> A violin is playing a melody.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case13
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/instrument/case14.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A man is playing an accordion in a room. He is wearing a red cap with 'MOTUL' written on it, a blue shirt, green pants, and black sandals. The room has a wooden floor, a white door, and a sink. The man is focused on playing the accordion, moving his fingers on the keys and buttons. The background music is from the accordion.<br><span class="highlight-blue">Ambient Prompt:</span> Music from the accordion.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case14
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/instrument/case15.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> A young child is playing a drum set in a living room, creating a cheerful and lively atmosphere. The child is smiling and appears to be enjoying the activity. The background includes a black leather sofa, white curtains, and a potted plant on a table, adding to the cozy and homey setting.<br><span class="highlight-blue">Ambient Prompt:</span> A drum is being played.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case15
                             </figcaption>
                         </div>
                     </div>
@@ -459,41 +704,56 @@
                     <br></br>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/1.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case1.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video showcases a tranquil scene of a waterfall in a dense forest. The waterfall is the central focus, with water cascading down a rocky cliff surrounded by lush greenery. The ambient sound of flowing water adds to the peaceful atmosphere, making it a perfect representation of nature's beauty.<br><span class="highlight-blue">Ambient Prompt:</span> Sound of flowing spring water.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case1
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/2.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case2.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video begins with a close-up of a woman with short brown hair, wearing a blue dress with a red belt, standing and looking at the fireworks in the sky. The camera then pulls away, revealing a wider view of the night sky filled with colorful fireworks. The sound of fireworks exploding can be heard throughout the video.<br><span class="highlight-blue">Ambient Prompt:</span> Sound of fireworks exploding.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case2
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/3.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case3.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video depicts a group of people performing aerobics in a park setting. The characters are dressed in athletic wear and are stepping on step platforms in unison. The background features a park-like environment with trees, grass, and a staircase. The ambient sound is that of dance music, adding to the energetic atmosphere of the scene.<br><span class="highlight-blue">Ambient Prompt:</span> Sound of dance music.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case3
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/4.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case4.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures the moment a civilian airliner prepares for and executes takeoff on a wide, open runway. The scene is set against a backdrop of a flat landscape and a partly cloudy sky, with the sound of the plane's engine providing an immersive audio experience. The airliner moves from a stationary position to full speed, and finally lifts off, showcasing the power and precision of modern aviation.<br><span class="highlight-blue">Ambient Prompt:</span> The sound of the plane's engine roars.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case4
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/5.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case5.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a first-person perspective of a motorcyclist speeding down a winding road through a dense forest. The motorcyclist, dressed in a black leather jacket and gloves, grips the handlebars tightly as they navigate the curves. The speedometer shows the increasing speed, and the motorcycle leans into the turns. The background is filled with tall trees and a clear blue sky, creating a serene and natural environment. The sound of the motor engine and the wind rushing past add to the immersive experience.<br><span class="highlight-blue">Ambient Prompt:</span> "Sound of motor engine, wind rushing past.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case5
                             </figcaption>
@@ -501,43 +761,115 @@
                     </div>
                     <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/6.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case6.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a close-up view of a fire burning brightly. The flames are intense and vibrant, illuminating the surrounding area with a warm glow. The wood logs are slowly burning, and the crackling sound of the fire can be heard. The scene is realistic and captures the essence of a cozy fire burning.<br><span class="highlight-blue">Ambient Prompt:</span> Fire crackling and crackling with wind blowing.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case6
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/7.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case7.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a serene moment of a small bird perched on a branch, singing or chirping, with a blurred green background that suggests a natural outdoor setting. The bird's movements are subtle, primarily involving the opening and closing of its beak.<br><span class="highlight-blue">Ambient Prompt:</span> Birds chirping and singing.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case7
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/8.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case8.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a spectacular display of fireworks lighting up the night sky. The fireworks explode in various colors and patterns, creating a dazzling and dynamic visual effect. The background is a dark night sky, providing a stark contrast to the bright, colorful bursts of light. There are no characters or objects present in the video, and the focus is solely on the fireworks and their explosive display.<br><span class="highlight-blue">Ambient Prompt:</span> Several loud bursts of fireworks,</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case8
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/9.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case9.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a stunning view of a powerful waterfall, with water cascading down over a rocky edge and creating a misty atmosphere. The scene is devoid of any human presence, focusing solely on the natural beauty of the waterfall and its surroundings.<br><span class="highlight-blue">Ambient Prompt:</span> Water is rushing and splashing.</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case9
                             </figcaption>
                         </div>
                         <div class="video-container">
-                            <video style="width:80%;height:80%;" controls style="margin: 5px;" >
-                                <source src="./files/generated/other/10.mp4" type="video/mp4">
+                            <video controls>
+                                <source src="./files/generated/other/case10.mp4" type="video/mp4">
                             </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video depicts a festive scene at a night market in Japan on New Year's Eve. Three girls in traditional Japanese kimonos are enjoying the fireworks display. The girl in the front is speaking happily, while the other two girls are smiling and looking at the fireworks. The background features colorful fireworks in the sky, stalls with lanterns, and a festive atmosphere. The ambient sound includes the sound of fireworks and the ambient noise of a night market.<br><span class="highlight-blue">Ambient Prompt:</span> The sound of fireworks, he ambient noise of a night market.<br><span class="highlight-blue">Speech Content:</span> It is new year's eve, and the fireworks are so beautiful!</p>
+                            </div>
                             <figcaption class="caption" style="font-size: 16px;">
                                 Case10
+                            </figcaption>
+                        </div>
+                    </div>
+                    <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/other/case11.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a serene and somewhat melancholic rainy night scene. The camera remains stationary, focusing on the trees and the street as the rain falls heavily. The ambient sounds of rain and wind add to the peaceful yet somber atmosphere.<br><span class="highlight-blue">Ambient Prompt:</span> Rain falling on a surface.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case11
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/other/case12.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a serene scene of a boat journeying through a cold, icy ocean towards a large iceberg. The camera follows the boat's movement, highlighting the vastness of the ocean and the majestic presence of the iceberg. The ambient sounds of waves and wind add to the immersive experience of the journey.<br><span class="highlight-blue">Ambient Prompt:</span> Wind blowing hard and waves crashing.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case12
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/other/case13.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video shows a yellow helicopter with 'SAMU' written on it, parked on a helipad in a city setting. The helicopter is stationary and its engine is starting with roar of the engine, and there are no visible characters or significant actions taking place. The background includes buildings and parked cars, suggesting an urban environment.<br><span class="highlight-blue">Ambient Prompt:</span> An aircraft engine running idle.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case13
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/other/case14.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video depicts a scene of a flooded area caused by heavy waves crashing against the shore. Trees and buildings are partially submerged in water, and the sky is cloudy, indicating a severe weather event. The waves continue to crash, and the water level rises, submerging more of the area.<br><span class="highlight-blue">Ambient Prompt:</span> Waves crash against the shore as a man yells and the wind blows.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case14
+                            </figcaption>
+                        </div>
+                        <div class="video-container">
+                            <video controls>
+                                <source src="./files/generated/other/case15.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay">
+                                <p><span class="highlight-blue">Video Prompt:</span> The video captures a military helicopter taking off from a grassy field. The helicopter is large and green, with its rotors spinning rapidly as it lifts off the ground. The background features a cloudy sky and some distant structures, adding to the realistic setting of the scene.<br><span class="highlight-blue">Ambient Prompt:</span> Helicopter blades spinning.</p>
+                            </div>
+                            <figcaption class="caption" style="font-size: 16px;">
+                                Case15
                             </figcaption>
                         </div>
                     </div>
@@ -551,12 +883,25 @@
             <div class="col-md-12 col-md-offset-0 text-center">
                 <br></br>
                 <h2>
-                    Uni-Bench
+                    Verse-Bench
                 </h2>
                 <hr style="margin-top:0px">
                 <p class="text-center" style="font-size: 16px;">
-                    To systematically evaluate our proposed method, we introduce Uni-Bench, a new benchmark dataset. Uni-Bench comprises 600 image-text prompt pairs designed to cover a diverse range of sound categories. Highlighting its versatility, the benchmark supports the evaluation of not only joint audio-video generation but also unidirectional tasks. It can be used to assess video-to-audio generation, and it includes the specialized Uni-Ted subset for evaluating audio-to-video tasks like talking head synthesis.
+                    Verse-Bench is a benchmark we developed for evaluating joint audio-visual generation. We curated 600 image-text prompt pairs from a multitude of sources. These sources encompass frames extracted from YouTube videos, BiliBili videos, TikTok clips, movies, and anime; images generated by AI models; and a collection of images from public websites. Our dataset comprises three subsets:
                 </p>
+                <img src="./files/versebench_statistics.png" class="img-responsive" alt="planner" style="padding-left:10%;padding-right:10%;">
+                <br></br>
+            </div>
+
+            <div class="col-md-12 col-md-offset-0">
+                <li> Set1 contains image-text pairs (including AI-generated, web-crawled, and media screenshots), for which video/audio captions and speech content were produced using LLMs and manual annotation, comprising a total of 205 samples. Statistical results in figure (b).</li>
+                <li> Set2 consists of video clips from YouTube and Bilibili, which were annotated with LLM-generate captions and Whisper-based ASR transcripts, followed by human verification, comprising a total of 295 samples. Statistical results in figure (c).</li>
+                <li> Set3 includes TED Talks from September 2025, processed with the same annotation pipeline as Set2, comprising a total of 100 samples.</li>
+            </div>
+
+            <div class="col-md-12 col-md-offset-0 text-center">
+                <br></br>
+                <br></br>
             </div>
             <div class="row justify-content-center" style="align-items:center; display:flex; margin-bottom: 20px;">
                 <video style="width:100%;height:50%;padding-left:5%;padding-right:5%;" controls style="margin: 5px;" >
